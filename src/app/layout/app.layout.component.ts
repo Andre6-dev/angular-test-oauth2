@@ -1,16 +1,17 @@
-import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { MenuService } from './app.menu.service';
 import { AppSidebarComponent } from './app.sidebar.component';
 import { AppTopbarComponent } from './app.topbar.component';
 import { LayoutService } from './service/app.layout.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-layout',
     templateUrl: './app.layout.component.html',
 })
-export class AppLayoutComponent implements OnDestroy {
+export class AppLayoutComponent implements OnDestroy, AfterViewInit {
     overlayMenuOpenSubscription: Subscription;
 
     menuOutsideClickListener: any;
@@ -25,8 +26,11 @@ export class AppLayoutComponent implements OnDestroy {
         private menuService: MenuService,
         public layoutService: LayoutService,
         public renderer: Renderer2,
-        public router: Router
+        public router: Router,
+        private cookieService: CookieService
     ) {
+
+
         this.overlayMenuOpenSubscription =
             this.layoutService.overlayOpen$.subscribe(() => {
                 if (!this.menuOutsideClickListener) {
@@ -83,7 +87,14 @@ export class AppLayoutComponent implements OnDestroy {
                 this.hideMenu();
             });
     }
+  ngAfterViewInit(): void {
 
+    const sessionId = this.cookieService.get('SESSION'); // Reemplaza 'SESSIONID' por el nombre de tu cookie de sesión
+    console.log("SESSIONSESSIONSESSION ngAfterViewInit", sessionId);
+    
+      }
+
+  
     blockBodyScroll(): void {
         if (document.body.classList) {
             document.body.classList.add('blocked-scroll');
