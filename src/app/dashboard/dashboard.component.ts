@@ -19,4 +19,12 @@ export class DashboardComponent {
     );
   }
 
+  authenticate(): void {
+    this.petResourceServer.authenticate().subscribe({
+        next: (value) => console.log(value),
+        error: (error) => console.error(error)
+      }
+    );
+  }
+
 }

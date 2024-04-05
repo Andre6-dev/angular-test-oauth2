@@ -10,6 +10,10 @@ export class PetResourceServerService {
   constructor(private httpClient: HttpClient) { }
 
   public breeds(): Observable<any> {
-    return this.httpClient.get<any>('/api/v1/breeds');
+    return this.httpClient.get<any>('/api/v1/breeds', {withCredentials : true});
+  }
+
+  public authenticate(): Observable<any> {
+    return this.httpClient.get<any>('/authenticate', {withCredentials : true});
   }
 }
